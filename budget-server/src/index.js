@@ -2,8 +2,6 @@ import express from "express";
 import { query } from "./pgsql.js";
 const app = express();
 
-console.log(process.env.PGPASSWORD);
-
 app.get("/", (_, res) => {
   res.send("Hello World!");
 });
@@ -26,4 +24,10 @@ const m_query = {
   values: ["gono2g92ugowv"],
 };
 
-query(m_query);
+query(m_query)
+  .then((res) => {
+    console.log("rows[0]", res.rows[0]);
+  })
+  .catch((e) => {
+    console.error(e.stack);
+  });

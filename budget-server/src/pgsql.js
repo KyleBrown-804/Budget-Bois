@@ -14,11 +14,9 @@ const pool = new Pool({
 
 // Allows for passing a normal query or query config object
 export async function query(text, params) {
-  try {
-    const res = await pool.query(text, params);
-    console.log(res);
-    return res;
-  } catch (err) {
-    console.log(err);
-  }
+  const start = Date.now();
+  const res = await pool.query(text, params);
+  const duration = Date.now() - start;
+  console.log("executed query", { text, duration, rows: res.rowCount });
+  return res;
 }

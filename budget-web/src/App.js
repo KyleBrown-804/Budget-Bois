@@ -1,52 +1,52 @@
-// import logo from "./logo.svg";
-// import "./App.css";
-
-// function App() {
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <img src={logo} className="App-logo" alt="logo" />
-//         <p>
-//           Edit <code>src/App.js</code> and save to reload.
-//         </p>
-//         <a
-//           className="App-link"
-//           href="https://reactjs.org"
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           Learn React
-//         </a>
-//       </header>
-//     </div>
-//   );
-// }
-
-// export default App;
-
 import logo from "./logo.svg";
 import "./App.css";
+import {
+  Button,
+  ButtonGroup,
+  AppBar,
+  Toolbar,
+  Menu,
+  Typography,
+  IconButton,
+} from "@material-ui/core";
+import MenuIcon from "@material-ui/icons/Menu";
+import SettingsIcon from "@material-ui/icons/Settings";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+      <AppBar position="fixed">
+        <Toolbar variant="dense">
+          <Typography variant="h6" color="inherit">
+            Budget Boi
+          </Typography>
+          <ButtonGroup
+            variant="text"
+            color="inherit"
+            aria-label="text primary button group"
+          >
+            <Button>Overview</Button>
+            <Button>Budget</Button>
+            <Button>Bills</Button>
+            <Button>Transactions</Button>
+            <Button>Goals</Button>
+            <Button>Debts</Button>
+            <Button>Credit Score</Button>
+            <Button>Schedule</Button>
+            <Button>Investments</Button>
+          </ButtonGroup>
+          <IconButton edge="start" color="inherit" aria-label="menu">
+            <MenuIcon />
+          </IconButton>
+          <IconButton edge="start" color="inherit" aria-label="menu">
+            <SettingsIcon />
+          </IconButton>
+        </Toolbar>
+      </AppBar>
 
-        <p>Budget Boi</p>
-
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <form action="../../post" method="post" className="form">
-          <button type="submit">Connected?</button>
-        </form>
-      </header>
+      <form action="../../post" method="post" className="form">
+        <button type="submit">Connected?</button>
+      </form>
     </div>
   );
 }
