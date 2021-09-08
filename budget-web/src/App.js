@@ -1,4 +1,5 @@
 import logo from "./logo.svg";
+import { useEffect, useState } from "react";
 import "./App.css";
 import {
   Button,
@@ -13,9 +14,18 @@ import MenuIcon from "@material-ui/icons/Menu";
 import SettingsIcon from "@material-ui/icons/Settings";
 
 function App() {
+  useEffect(() => {
+    fetch("/api/users")
+      .then((res) => res.json())
+      .then((msg) => setMessage(msg))
+      .catch((err) => console.log(err));
+  }, []);
+
+  const [message, setMessage] = useState("Nothing loaded yet");
+
   return (
     <div className="App">
-      <AppBar position="fixed">
+      {/* <AppBar position="fixed">
         <Toolbar variant="dense">
           <Typography variant="h6" color="inherit">
             Budget Boi
@@ -42,11 +52,13 @@ function App() {
             <SettingsIcon />
           </IconButton>
         </Toolbar>
-      </AppBar>
+      </AppBar> */}
 
-      <form action="../../post" method="post" className="form">
+      <p>{message}</p>
+
+      {/* <form action="../../about" method="post" className="form">
         <button type="submit">Connected?</button>
-      </form>
+      </form> */}
     </div>
   );
 }
