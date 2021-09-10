@@ -1,0 +1,20 @@
+import { useEffect, useState } from "react";
+
+function Home() {
+  useEffect(() => {
+    fetch("/api/dashboard")
+      .then((res) => res.json())
+      .then((msg) => setMessage(msg))
+      .catch((err) => console.log(err));
+  }, []);
+
+  const [message, setMessage] = useState("Nothing loaded yet");
+
+  return (
+    <div className="Home">
+      <h1>{message}</h1>
+    </div>
+  );
+}
+
+export default Home;
