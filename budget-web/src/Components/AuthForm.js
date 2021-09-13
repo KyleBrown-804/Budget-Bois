@@ -6,14 +6,59 @@ import {
   Box,
   Container,
   Link,
+  Grid,
 } from "@material-ui/core";
 import AlternateEmailIcon from "@material-ui/icons/AlternateEmail";
 import LockIcon from "@material-ui/icons/LockOutlined";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, Field, useFormik } from "formik";
 import * as yup from "yup";
 
 const AuthForm = (props) => {
   const [showSignUp, setShowSignUp] = useState(props.isSignUp);
+
+  const loginSchema = yup.object({
+    email: yup
+      .string("Enter your email")
+      .email("Enter a valid email")
+      .required("Email is required"),
+    password: yup
+      .string("Enter your password")
+      .min(8, "Password should be a minimum of 8 characters")
+      .required("Password is required"),
+  });
+
+  const signUpSchema = yup.object({
+    username: yup
+      .string("Enter your username")
+      .required("Username is required"),
+    email: yup
+      .string("Enter your email")
+      .email("Enter a valid email")
+      .required("Email is required"),
+    password: yup
+      .string("Enter your password")
+      .min(8, "Password should be a minimum of 8 characters")
+      .required("Password is required"),
+    confirmpassword: yup
+      .string("Confirm your password")
+      .oneOf([yup.ref("password"), null], "Passwords must match")
+      .min(8, "Password should be a minimum of 8 characters")
+      .required("Confirm Password is required"),
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      username: "",
+      email: "",
+      password: "",
+      confirmpassword: "",
+    },
+    validationSchema: showSignUp ? signUpSchema : loginSchema,
+    onSubmit: (values) => {
+      // firebase auth sign in here
+      alert(JSON.stringify(values));
+    },
+  });
 
   return (
     <Box component="div" width={1}>
@@ -28,14 +73,20 @@ const AuthForm = (props) => {
             <h1>Login and manage your money!</h1>
           )}
 
-          {/* Add Formik and Yup logic for client side form validation */}
-          <form onSubmit={() => {}}>
+          <form onSubmit={formik.handleSubmit}>
             {showSignUp && (
               <TextField
+                fullWidth
+                style={{ marginBottom: 15 }}
                 id="username"
                 name="username"
                 label="Username"
-                fullWidth
+                value={formik.values.username}
+                onChange={formik.handleChange}
+                error={
+                  formik.touched.username && Boolean(formik.errors.username)
+                }
+                helperText={formik.touched.username && formik.errors.username}
               />
             )}
 
@@ -44,6 +95,7 @@ const AuthForm = (props) => {
                 position: "relative",
                 display: "inline-block",
                 width: "100%",
+                marginBottom: 15,
               }}
             >
               <AlternateEmailIcon
@@ -53,7 +105,16 @@ const AuthForm = (props) => {
                   top: 20,
                 }}
               />
-              <TextField id="email" name="email" label="Email" fullWidth />
+              <TextField
+                fullWidth
+                id="email"
+                name="email"
+                label="Email"
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                error={formik.touched.email && Boolean(formik.errors.email)}
+                helperText={formik.touched.email && formik.errors.email}
+              />
             </div>
 
             <div
@@ -71,11 +132,17 @@ const AuthForm = (props) => {
                 }}
               />
               <TextField
+                fullWidth
                 id="password"
                 name="password"
                 label="Password"
-                fullWidth
                 type="password"
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                error={
+                  formik.touched.password && Boolean(formik.errors.password)
+                }
+                helperText={formik.touched.password && formik.errors.password}
               />
             </div>
 
@@ -85,6 +152,7 @@ const AuthForm = (props) => {
                   position: "relative",
                   display: "inline-block",
                   width: "100%",
+                  marginTop: 15,
                 }}
               >
                 <LockIcon
@@ -95,40 +163,62 @@ const AuthForm = (props) => {
                   }}
                 />
                 <TextField
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  label="Confirm Password"
                   fullWidth
+                  id="confirmpassword"
+                  name="confirmpassword"
+                  label="Confirm Password"
                   type="password"
+                  value={formik.values.confirmpassword}
+                  onChange={formik.handleChange}
+                  error={
+                    formik.touched.confirmpassword &&
+                    Boolean(formik.errors.confirmpassword)
+                  }
+                  helperText={
+                    formik.touched.confirmpassword &&
+                    formik.errors.confirmpassword
+                  }
                 />
               </div>
             )}
 
             <Button
-              type="submit"
               fullWidth
+              type="submit"
               variant="contained"
               color="primary"
-              style={{ marginTop: 20 }}
+              style={{ marginTop: 20, marginBottom: 15 }}
             >
               {showSignUp ? "SignUp!" : "Login!"}
             </Button>
           </form>
 
-          <p>
-            {showSignUp
-              ? "Already have an account?"
-              : "Need to make an account?"}
-            <Link
-              component="button"
-              onClick={() => {
-                setShowSignUp(!showSignUp);
-              }}
-              style={{ paddingLeft: 10, bottom: 0.5 }}
-            >
-              {showSignUp ? "Login here" : "Sign up here"}
-            </Link>
-          </p>
+          <Grid
+            container
+            direction="row"
+            alignItems="center"
+            justifyContent="center"
+            spacing="1"
+            wrap="nowrap"
+          >
+            <Grid item>
+              {showSignUp
+                ? "Already have an account?"
+                : "Need to make an account?"}
+            </Grid>
+            <Grid item>
+              <Link
+                onClick={() => {
+                  setShowSignUp(!showSignUp);
+                  formik.resetForm();
+                }}
+                variant="body2"
+                component="button"
+              >
+                {showSignUp ? "Login here" : "Sign up here"}
+              </Link>
+            </Grid>
+          </Grid>
         </Card>
       </Container>
     </Box>
