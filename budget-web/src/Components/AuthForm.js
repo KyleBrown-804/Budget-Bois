@@ -1,4 +1,5 @@
 import { React, useState } from "react";
+import { useHistory, Link as RouterLink } from "react-router-dom";
 import {
   Button,
   Card,
@@ -8,13 +9,50 @@ import {
   Link,
   Grid,
 } from "@material-ui/core";
+import { Alert, AlertTitle } from "@mui/material";
+import { useAuth } from "../Contexts/AuthContext";
 import AlternateEmailIcon from "@material-ui/icons/AlternateEmail";
 import LockIcon from "@material-ui/icons/LockOutlined";
-import { Formik, Form, Field, useFormik } from "formik";
+import { useFormik } from "formik";
 import * as yup from "yup";
 
 const AuthForm = (props) => {
   const [showSignUp, setShowSignUp] = useState(props.isSignUp);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const history = useHistory();
+  const { signup, login, emailVerification } = useAuth();
+
+  async function firebaseSubmit(values) {
+    setError("");
+    setLoading(true);
+
+    if (showSignUp) {
+      await signup(values.email, values.password)
+        .then(() => {
+          // emailVerification()
+          //   .then(() => {})
+          //   .catch((error) => {});
+          console.log("signup successful");
+          history.push("/");
+        })
+        .catch((error) => {
+          setError("Failed to create an account with Google Firebase");
+          console.error(error.message);
+        });
+    } else {
+      await login(values.email, values.password)
+        .then(() => {
+          history.push("/");
+          console.log("login successful");
+        })
+        .catch((error) => {
+          setError("Failed to login with Google Firebase");
+          console.error(error.message);
+        });
+    }
+    setLoading(false);
+  }
 
   const loginSchema = yup.object({
     email: yup
@@ -55,8 +93,7 @@ const AuthForm = (props) => {
     },
     validationSchema: showSignUp ? signUpSchema : loginSchema,
     onSubmit: (values) => {
-      // firebase auth sign in here
-      alert(JSON.stringify(values));
+      firebaseSubmit(values);
     },
   });
 
@@ -71,6 +108,16 @@ const AuthForm = (props) => {
             <h1>Signup and start your budget!</h1>
           ) : (
             <h1>Login and manage your money!</h1>
+          )}
+
+          {error && (
+            <Alert
+              severity="error"
+              style={{ textAlign: "left", marginBottom: 15 }}
+            >
+              <AlertTitle>Authentication Error</AlertTitle>
+              {error}
+            </Alert>
           )}
 
           <form onSubmit={formik.handleSubmit}>
@@ -183,6 +230,7 @@ const AuthForm = (props) => {
             )}
 
             <Button
+              disabled={loading}
               fullWidth
               type="submit"
               variant="contained"
@@ -211,6 +259,7 @@ const AuthForm = (props) => {
                 onClick={() => {
                   setShowSignUp(!showSignUp);
                   formik.resetForm();
+                  setError("");
                 }}
                 variant="body2"
                 component="button"
@@ -219,6 +268,9 @@ const AuthForm = (props) => {
               </Link>
             </Grid>
           </Grid>
+          <Link component={RouterLink} to="/forgot-password">
+            Forgot Password?
+          </Link>
         </Card>
       </Container>
     </Box>
