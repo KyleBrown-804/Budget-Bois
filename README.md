@@ -1,7 +1,6 @@
-# Budget-Bois
+# React, Node, Express, & PostgreSQL Budgeting Webapp
 
-[Goal]
-
+## The Goal
 The goal of this website is to allow for a convient central hub to manage all the
 financial aspects of your life. It is unopinonated on how a user tracks or manages their spending
 and simply allows them to categorize and group together types of spending in a way that makes sense to
@@ -12,8 +11,7 @@ UI and flexibiliy to customize and group expense categories to how it makes sens
 Following an initial and prototype state the goal is to move on to integrating more (useful) features
 and integrate retrieving data from real institutions to give the user accurate numbers to the penny.
 
-[Current Status]
-
+## Current Status
 This is an ongoing project to demonstrate full stack development, using React with professional
 Material-UI stylings, to middleware routing and API interactions with Express, to full
 relational database management with PostgreSQL running on a Node.js server.
@@ -22,8 +20,7 @@ The site initially will utilize client side rendering as default by React routin
 Express to handle API endpoints for data fetching and database interactions. The plan is to eventually
 switch to dynamic rendering once more of the project is flushed out.
 
-[Directory]
-
+## Directory
 This repository is mainly split into two seperate folders the "budget-server" folder for server side code 
 and "budget-web" for front end code. Later in production the server side code and client side code will 
 most likely be split to two seperate hosting servers for easier continous integration between the back-end 
@@ -39,10 +36,9 @@ Under the database folder at the root of this repository you will find planned o
 queries. This folder may contain sample user data later for testing performance and results from more 
 complex queries.
 
-[Technologies in Use]
-
-React (frontend)
-Node (back-end server)
-Express (routing/api interactions)
-PostgreSQL (relational database)
+## Technologies currently in use
+React (frontend)  
+Node (back-end server)  
+Express (routing/api interactions)  
+PostgreSQL (relational database)  
 Google Firebase (user email and password storage / authentication service)
