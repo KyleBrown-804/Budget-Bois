@@ -8,10 +8,11 @@ import {
   TextField,
   Link,
   Grid,
-} from "@material-ui/core";
-import { Alert, AlertTitle } from "@mui/material";
+  Alert,
+  AlertTitle,
+} from "@mui/material";
 import { useAuth } from "../Contexts/AuthContext";
-import AlternateEmailIcon from "@material-ui/icons/AlternateEmail";
+import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import { useFormik } from "formik";
 import * as yup from "yup";
 

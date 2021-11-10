@@ -8,11 +8,12 @@ import {
   Container,
   Link,
   Grid,
-} from "@material-ui/core";
-import { Alert, AlertTitle } from "@mui/material";
+  Alert,
+  AlertTitle,
+} from "@mui/material";
 import { useAuth } from "../Contexts/AuthContext";
-import AlternateEmailIcon from "@material-ui/icons/AlternateEmail";
-import LockIcon from "@material-ui/icons/LockOutlined";
+import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
+import LockIcon from "@mui/icons-material/LockOutlined";
 import { useFormik } from "formik";
 import * as yup from "yup";
 

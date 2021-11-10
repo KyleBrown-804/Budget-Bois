@@ -7,39 +7,38 @@ import {
   Menu,
   Typography,
   IconButton,
-} from "@material-ui/core";
-import MenuIcon from "@material-ui/icons/Menu";
-import SettingsIcon from "@material-ui/icons/Settings";
+} from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import SettingsIcon from "@mui/icons-material/Settings";
 
 function Navbar() {
   return (
-    <AppBar position="relative">
+    <AppBar position="fixed">
       <Toolbar variant="dense">
-        <Typography variant="h6" color="inherit">
-          Budget Boi
-        </Typography>
+        <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
+          <Typography variant="h6">Budget Bois</Typography>
+        </Link>
+
         <ButtonGroup
-          variant="text"
+          variant="string"
           color="inherit"
           aria-label="text primary button group"
+          style={{ marginLeft: "auto" }}
         >
-          <Button component={Link} to="/">
-            Overview
-          </Button>
-          <Button>Budget</Button>
+          {/* <Button>Budget</Button> */}
           <Button component={Link} to="/bills">
             Bills
           </Button>
           <Button>Transactions</Button>
-          <Button>Goals</Button>
-          <Button>Debts</Button>
-          <Button>Credit Score</Button>
-          <Button>Schedule</Button>
-          <Button>Investments</Button>
+          {/* <Button>Goals</Button>
+            <Button>Debts</Button>
+            <Button>Credit Score</Button>
+            <Button>Schedule</Button>
+            <Button>Investments</Button> */}
         </ButtonGroup>
-        <IconButton edge="start" color="inherit" aria-label="menu">
-          <MenuIcon />
-        </IconButton>
+        {/* <IconButton edge="start" color="inherit" aria-label="menu">
+            <MenuIcon />
+          </IconButton> */}
         <IconButton edge="start" color="inherit" aria-label="menu">
           <SettingsIcon />
         </IconButton>

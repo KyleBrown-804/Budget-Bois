@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useAuth } from "../Contexts/AuthContext";
-import { Button } from "@material-ui/core";
+import { Button } from "@mui/material";
 
 function Home() {
   const [message, setMessage] = useState("Nothing loaded yet");
